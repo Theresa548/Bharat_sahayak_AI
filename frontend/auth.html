@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Government Portal - Login / Sign Up</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
+    header {
+      background-color: #0a3d62;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 4px solid #e1e1e1;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 400px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #0a3d62;
+      font-size: 20px;
+      text-align: center;
+    }
+    label {
+      display: block;
+      text-align: left;
+      margin: 10px 0 5px;
+      font-weight: 600;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #0a3d62;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #07406f;
+    }
+    .toggle-link {
+      margin-top: 15px;
+      display: block;
+      text-align: center;
+      color: #0a3d62;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: #555;
+      background: #eaeaea;
+      border-top: 1px solid #ccc;
+    }
+    /* FIX: hide elements with .hidden */
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>National Citizen Services Portal</h1>
+  </header>
+
+  <div class="container">
+    <!-- Login Form -->
+    <div id="loginForm">
+      <h2>Login</h2>
+      <form>
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        
+        <button type="submit">Login</button>
+      </form>
+      <span class="toggle-link" onclick="toggleForms()">New user? Sign Up</span>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div id="signupForm" class="hidden">
+      <h2>Sign Up</h2>
+      <form>
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" placeholder="Enter your full name" required>
+        
+        <label for="signupEmail">Email Address</label>
+        <input type="email" id="signupEmail" placeholder="Enter your email" required>
+        
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" placeholder="Create a password" required>
+        
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+        
+        <button type="submit">Sign Up</button>
+      </form>
+      <span class="toggle-link" onclick="toggleForms()">Already have an account? Login</span>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 Government of India | All Rights Reserved
+  </footer>
+
+  <script>
+    function toggleForms() {
+      document.getElementById("loginForm").classList.toggle("hidden");
+      document.getElementById("signupForm").classList.toggle("hidden");
+    }
+  </script>
+</body>
+</html>
