@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Document</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f2f6fa;
+    }
+
+    header {
+      background-color: #0a3d62;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .docs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .doc-card {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .doc-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .doc-card h3 {
+      margin-bottom: 10px;
+      color: #0a3d62;
+    }
+
+    .doc-card p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    .back {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .back a {
+      text-decoration: none;
+      color: #1e90ff;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>Select Document to Apply</header>
+
+<div class="container">
+  <h2>Available Documents</h2>
+
+  <div class="docs">
+    <div class="doc-card" onclick="selectDoc('Aadhaar')">
+      <h3>Aadhaar Card</h3>
+      <p>Apply for new Aadhaar enrollment</p>
+    </div>
+
+    <div class="doc-card" onclick="selectDoc('PAN')">
+      <h3>PAN Card</h3>
+      <p>Apply for Permanent Account Number</p>
+    </div>
+
+    <div class="doc-card" onclick="selectDoc('Voter ID')">
+      <h3>Voter ID</h3>
+      <p>Register for voter identification</p>
+    </div>
+
+    <div class="doc-card" onclick="selectDoc('Income Certificate')">
+      <h3>Income Certificate</h3>
+      <p>Apply for income proof certificate</p>
+    </div>
+
+    <div class="doc-card" onclick="selectDoc('Birth Certificate')">
+      <h3>Birth Certificate</h3>
+      <p>Apply for birth certificate</p>
+    </div>
+
+    <div class="doc-card" onclick="selectDoc('Ration Card')">
+      <h3>Ration Card</h3>
+      <p>Apply for ration card</p>
+    </div>
+
+    <div class="doc-card" onclick="selectDoc('Marriage Certificate')">
+      <h3>Marriage Certificate</h3>
+      <p>Apply for marital status certificate</p>
+    </div>
+  </div>
+
+  <div class="back">
+    <a href="/dashboard">⬅ Back to Dashboard</a>
+  </div>
+</div>
+
+<script>
+  function selectDoc(doc) {
+    localStorage.setItem("selected_document", doc);
+    window.location.href = "/form";
+  }
+</script>
+
+</body>
+</html>

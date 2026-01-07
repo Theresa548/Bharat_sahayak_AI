@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Apply for Document</title>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f2f6fa;
+      margin: 0;
+    }
+
+    header {
+      background-color: #0a3d62;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      background-color: #0a3d62;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1e90ff;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #0a3d62;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  Apply for <span id="docName"></span>
+</header>
+
+<div class="container">
+  <h2>Applicant Details</h2>
+
+  <form id="applyForm">
+    <label>Full Name</label>
+    <input type="text" required>
+
+    <label>Date of Birth</label>
+    <input type="date" required>
+
+    <label>Mobile Number</label>
+    <input type="tel" required>
+
+    <label>Address</label>
+    <input type="text" required>
+
+    <label>State</label>
+    <input type="text" required>
+
+    <button type="submit">Submit Application</button>
+  </form>
+
+  <a class="back" href="/dashboard">← Back to Dashboard</a>
+</div>
+
+<script>
+  const doc = localStorage.getItem("selected_document");
+  document.getElementById("docName").textContent = doc || "Document";
+
+  document.getElementById("applyForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("Application submitted successfully!\nStatus: Under Review");
+    // Next step: send data to backend
+  });
+</script>
+
+</body>
+</html>

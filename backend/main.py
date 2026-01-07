@@ -97,3 +97,15 @@ def login_page():
 def signup_page():
     with open("frontend/signup.html", "r", encoding="utf-8") as f:
         return f.read()
+
+
+@app.get("/select-document", response_class=HTMLResponse)
+def select_document():
+    with open("frontend/select_document.html", "r", encoding="utf-8") as f:
+        return f.read()
+
+
+@app.get("/form", response_class=HTMLResponse)
+def apply_form():
+    with open("frontend/form.html", encoding="utf-8") as f:
+        return f.read()

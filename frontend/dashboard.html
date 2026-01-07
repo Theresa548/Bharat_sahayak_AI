@@ -1,141 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bharat Sahaayak AI - Dashboard</title>
+
   <style>
     body {
       margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
-      background-color: #f4f4f4;
+      background-color: #f2f6fa;
     }
 
     header {
-      background-color: #0a3d62;
-      color: #fff;
+      background: linear-gradient(90deg, #0a3d62, #1e90ff);
+      color: white;
       padding: 20px;
       text-align: center;
       font-size: 24px;
       font-weight: bold;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     .container {
       display: flex;
-      min-height: 90vh;
+      min-height: calc(100vh - 70px);
     }
 
     /* Sidebar */
     .sidebar {
-      width: 220px;
-      background-color: #07406f;
-      color: #fff;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
+      width: 230px;
+      background-color: #0a3d62;
+      color: white;
+      padding: 25px 15px;
     }
 
     .sidebar h3 {
-      margin-top: 0;
-      margin-bottom: 20px;
-      font-size: 18px;
       text-align: center;
+      margin-bottom: 30px;
+      font-size: 18px;
     }
 
     .sidebar a {
-      color: #fff;
+      display: block;
+      color: white;
       text-decoration: none;
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      transition: background 0.2s;
     }
 
     .sidebar a:hover {
-      background-color: #0a3d62;
+      background-color: #1e90ff;
     }
 
     /* Main content */
     .main-content {
       flex: 1;
-      padding: 30px;
+      padding: 35px;
     }
 
     .welcome {
-      font-size: 20px;
+      font-size: 22px;
       margin-bottom: 30px;
     }
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
     }
 
     .card {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background-color: white;
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       text-align: center;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      transform: translateY(-6px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
     }
 
     footer {
       text-align: center;
-      padding: 15px;
+      padding: 12px;
       font-size: 12px;
       color: #555;
       background-color: #eaeaea;
-      border-top: 1px solid #ccc;
     }
   </style>
 </head>
+
 <body>
 
   <header>
-    Bharat Sahaayak AI Dashboard
+    Bharat Sahaayak AI – Citizen Dashboard
   </header>
 
   <div class="container">
+    <!-- Sidebar -->
     <div class="sidebar">
-      <h3>Menu</h3>
-      <a href="#" onclick="alert('Get Documents clicked')">Get Documents</a>
-      <a href="#" onclick="alert('Update Documents clicked')">Update Documents</a>
-      <a href="#" onclick="alert('Verify Documents clicked')">Verify Documents</a>
-      <a href="#" onclick="logout()">Logout</a>
+      <h3>Dashboard Menu</h3>
+      <a href="#" onclick="applyDocs()">📝 Apply for Documents</a>
+      <a href="#" onclick="updateDocs()">✏️ Update Documents</a>
+      <a href="#" onclick="viewDocs()">📂 View Existing Documents</a>
+      <a href="#" onclick="logout()">🚪 Logout</a>
     </div>
 
+    <!-- Main content -->
     <div class="main-content">
       <div class="welcome">
-        Welcome, <span id="username">User</span>!
+        Welcome, <strong id="username">User</strong> 👋
       </div>
 
       <div class="cards">
-        <div class="card" onclick="alert('Get Documents clicked')">📄 Get Documents</div>
-        <div class="card" onclick="alert('Update Documents clicked')">✏️ Update Documents</div>
-        <div class="card" onclick="alert('Verify Documents clicked')">✅ Verify Documents</div>
+        <div class="card" onclick="applyDocs()">
+          📝 Apply for Documents
+        </div>
+
+        <div class="card" onclick="updateDocs()">
+          ✏️ Update Documents
+        </div>
+
+        <div class="card" onclick="viewDocs()">
+          📂 View Existing Documents
+        </div>
       </div>
     </div>
   </div>
 
   <footer>
-    &copy; 2026 Bharat Sahaayak AI | All Rights Reserved
+    © 2026 Bharat Sahaayak AI | Digital India Initiative 🇮🇳
   </footer>
 
   <script>
-    // Show username from localStorage
+    // Load username
     const username = localStorage.getItem("user_name") || "User";
     document.getElementById("username").textContent = username;
 
-    function logout(){
+    function applyDocs() {
+      window.location.href = "/select-document";
+    }
+
+    function updateDocs() {
+      alert("Update Documents feature coming soon!");
+    }
+
+    function viewDocs() {
+      alert("View Existing Documents feature coming soon!");
+    }
+
+    function logout() {
       localStorage.clear();
       window.location.href = "/";
     }
