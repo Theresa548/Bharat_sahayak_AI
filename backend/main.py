@@ -109,3 +109,5 @@ def select_document():
 def apply_form():
     with open("frontend/form.html", encoding="utf-8") as f:
         return f.read()
+
+

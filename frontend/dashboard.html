@@ -3,97 +3,404 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bharat Sahaayak AI - Dashboard</title>
+  <title>Bharat Sahayak AI</title>
 
   <style>
+    :root {
+      --saffron: #FF9933;
+      --green: #138808;
+      --blue: #1e90ff;
+      --gov-blue: #0a3d62;
+      --bg: #ffffff;
+      --text: #1b1b1b;
+      --muted: #666666;
+      --card: #ffffff;
+      --shadow: rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background-color: #f2f6fa;
+      font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
     }
 
+    /* Header */
     header {
-      background: linear-gradient(90deg, #0a3d62, #1e90ff);
-      color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .container {
+      background: linear-gradient(90deg, var(--gov-blue), var(--blue));
+      color: #fff;
+      padding: 16px;
       display: flex;
-      min-height: calc(100vh - 70px);
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: 0.3px;
+    }
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 25% 25%, var(--saffron) 0 45%, transparent 46%),
+        radial-gradient(circle at 75% 75%, var(--green) 0 45%, transparent 46%),
+        linear-gradient(135deg, #ffffff33, #00000022);
+      box-shadow: 0 2px 6px var(--shadow);
     }
 
-    /* Sidebar */
-    .sidebar {
-      width: 230px;
-      background-color: #0a3d62;
-      color: white;
-      padding: 25px 15px;
+    /* Language selector */
+    .lang-select {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff22;
+      padding: 6px 10px;
+      border-radius: 10px;
+    }
+    .lang-select label {
+      font-size: 14px;
+      color: #fff;
+      opacity: 0.9;
+    }
+    .lang-select select {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 15px;
+      background: #fff;
+      color: var(--text);
+      min-width: 140px;
     }
 
-    .sidebar h3 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 18px;
+    /* Layout */
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 16px 24px;
     }
 
-    .sidebar a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 6px;
-      transition: background 0.2s;
-    }
-
-    .sidebar a:hover {
-      background-color: #1e90ff;
-    }
-
-    /* Main content */
-    .main-content {
-      flex: 1;
-      padding: 35px;
-    }
-
+    /* Welcome / helper text */
     .welcome {
-      font-size: 22px;
-      margin-bottom: 30px;
+      font-size: 18px;
+      color: var(--muted);
+      margin: 8px 0 18px;
     }
 
+    /* Cards grid */
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
     }
-
     .card {
-      background-color: white;
-      padding: 30px 20px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      text-align: center;
-      font-size: 16px;
-      font-weight: bold;
+      background-color: var(--card);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 8px 18px var(--shadow);
+      border: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      min-height: 92px;
     }
-
     .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+      border-color: #e6e6e6;
+    }
+    .card .icon {
+      font-size: 30px;
+    }
+    .card .title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .accent-saffron { outline: 3px solid #ffe6cc; }
+    .accent-green   { outline: 3px solid #dff2df; }
+    .accent-blue    { outline: 3px solid #dcebff; }
+
+    /* Section visibility */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary {
+      background: linear-gradient(90deg, var(--gov-blue), var(--blue));
+      color: #fff;
+      box-shadow: 0 6px 14px rgba(30, 144, 255, 0.35);
+    }
+    .btn-outline {
+      background: #fff;
+      color: var(--text);
+      border: 2px solid #eaeaea;
+    }
+    .btn-urgent {
+      background: linear-gradient(90deg, var(--saffron), #ff6f00);
+      color: #fff;
+      box-shadow: 0 6px 14px rgba(255, 153, 51, 0.35);
     }
 
+    /* Inputs */
+    .input, .select, .search {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #eaeaea;
+      border-radius: 14px;
+      font-size: 16px;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+    }
+    .input:focus, .select:focus, .search:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px #dcebff;
+    }
+
+    /* Chips / filters */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 12px 0 18px;
+    }
+    .chip {
+      padding: 10px 14px;
+      border-radius: 20px;
+      background: #f7f7f7;
+      border: 2px solid #eeeeee;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+    }
+    .chip.active {
+      border-color: var(--green);
+      background: #eaf7ea;
+      color: var(--green);
+    }
+
+    /* Scheme cards */
+    .scheme-card {
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      border-radius: 16px;
+      box-shadow: 0 6px 14px var(--shadow);
+      padding: 18px;
+      display: grid;
+      gap: 8px;
+    }
+    .scheme-title { font-size: 18px; font-weight: 800; }
+    .scheme-meta { color: var(--muted); font-size: 14px; }
+    .scheme-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* Chat UI */
+    .chat-wrap {
+      background: #f8fafc;
+      border: 1px solid #eef2f7;
+      border-radius: 16px;
+      box-shadow: 0 6px 14px var(--shadow);
+      overflow: hidden;
+    }
+    .chat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: #ffffff;
+      border-bottom: 1px solid #eef2f7;
+    }
+    .chat-header .center-button {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--gov-blue), var(--blue));
+      color: #fff;
+      font-size: 22px;
+      box-shadow: 0 6px 14px rgba(30, 144, 255, 0.35);
+      cursor: pointer;
+    }
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      padding: 12px;
+      background: #ffffff;
+      border-bottom: 1px solid #eef2f7;
+    }
+    .quick-card {
+      background: #fff;
+      border: 2px solid #eef2f7;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .quick-card.urgent {
+      border-color: var(--saffron);
+      background: #fff6e9;
+      color: #9a4a00;
+    }
+    .chat-body {
+      height: 42vh;
+      min-height: 280px;
+      max-height: 54vh;
+      overflow-y: auto;
+      padding: 14px;
+      background: #f7fbff;
+    }
+    .msg {
+      display: inline-flex;
+      max-width: 86%;
+      background: #fff;
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 10px 0;
+      box-shadow: 0 4px 10px var(--shadow);
+      border: 1px solid #eef2f7;
+      font-size: 16px;
+    }
+    .msg.user { background: #e7f3ff; border-color: #cfe6ff; }
+    .msg.ai { background: #ffffff; }
+    .msg .actions {
+      display: inline-flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .chat-input {
+      display: grid;
+      grid-template-columns: 1fr 48px 48px;
+      gap: 10px;
+      padding: 10px;
+      background: #ffffff;
+      border-top: 1px solid #eef2f7;
+    }
+    .mic-btn, .send-btn, .voice-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      background: #f0f7ff;
+      color: var(--gov-blue);
+    }
+
+    /* Scanner */
+    .scanner {
+      display: grid;
+      gap: 12px;
+    }
+    .preview {
+      width: 100%;
+      border-radius: 16px;
+      border: 2px dashed #d0e3ff;
+      min-height: 160px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      background: #f7fbff;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 20px;
+      font-weight: 800;
+    }
+    .verified {
+      background: #eaf7ea;
+      color: var(--green);
+      border: 2px solid #c9e9c9;
+    }
+    .needs-update {
+      background: #fff6e9;
+      color: #9a4a00;
+      border: 2px solid #ffd9a6;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+      margin-top: 16px;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #eaeaea;
+    }
+    .tl-item {
+      position: relative;
+      margin: 14px 0;
+      padding-left: 12px;
+    }
+    .tl-item::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 0 3px #dcebff;
+    }
+    .tl-title { font-weight: 800; }
+    .tl-desc { color: var(--muted); font-size: 14px; }
+
+    /* Footer */
     footer {
       text-align: center;
-      padding: 12px;
+      padding: 14px;
       font-size: 12px;
       color: #555;
-      background-color: #eaeaea;
+      background-color: #f1f3f5;
+      border-top: 1px solid #eaeaea;
+    }
+
+    /* Accessibility: larger touch targets on small screens */
+    @media (max-width: 420px) {
+      .card { min-height: 104px; }
+      .chat-body { height: 48vh; }
     }
   </style>
 </head>
@@ -101,65 +408,545 @@
 <body>
 
   <header>
-    Bharat Sahaayak AI – Citizen Dashboard
+    <div class="brand">
+      <div class="brand-logo" aria-hidden="true"></div>
+      <div>Bharat Sahayak AI</div>
+    </div>
+
+    <div class="lang-select">
+      <label for="language">Language</label>
+      <select id="language" aria-label="Select language">
+        <option value="en">English</option>
+        <option value="hi">हिंदी</option>
+        <option value="mr">मराठी</option>
+        <option value="ta">தமிழ்</option>
+        <option value="te">తెలుగు</option>
+      </select>
+    </div>
   </header>
 
-  <div class="container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <h3>Dashboard Menu</h3>
-      <a href="#" onclick="applyDocs()">📝 Apply for Documents</a>
-      <a href="#" onclick="updateDocs()">✏️ Update Documents</a>
-      <a href="#" onclick="viewDocs()">📂 View Existing Documents</a>
-      <a href="#" onclick="logout()">🚪 Logout</a>
-    </div>
+  <main class="container">
+    <!-- Home / Dashboard -->
+    <section id="home" class="section active" aria-label="Home">
+      <h2 style="margin:8px 2px 4px;">Bharat Sahayak AI</h2>
+      <p class="welcome" id="welcomeText">Get help for government schemes easily</p>
 
-    <!-- Main content -->
-    <div class="main-content">
-      <div class="welcome">
-        Welcome, <strong id="username">User</strong> 👋
+      <div class="cards" role="navigation" aria-label="Main actions">
+        <div class="card accent-blue" onclick="go('chat')">
+          <div class="icon">🤖</div>
+          <div class="title" id="cardAskAI">Ask AI Assistant</div>
+        </div>
+        <div class="card accent-green" onclick="go('schemes')">
+          <div class="icon">🏛️</div>
+          <div class="title" id="cardSchemes">Government Schemes</div>
+        </div>
+        <div class="card accent-saffron" onclick="go('scanner')">
+          <div class="icon">📷</div>
+          <div class="title" id="cardScanner">Document Scanner</div>
+        </div>
+        <div class="card accent-blue" onclick="go('status')">
+          <div class="icon">📊</div>
+          <div class="title" id="cardStatus">Application Status</div>
+        </div>
+        <div class="card accent-green" onclick="alertText('updateDocs')">
+          <div class="icon">✏️</div>
+          <div class="title" id="cardUpdateDocs">Update Existing Document</div>
+        </div>
+        <div class="card accent-saffron" onclick="alertText('digilocker')">
+          <div class="icon">📁</div>
+          <div class="title" id="cardDigilocker">Access DigiLocker</div>
+        </div>
+        <div class="card accent-blue" onclick="logout()">
+          <div class="icon">🚪</div>
+          <div class="title" id="cardLogout">Logout</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Chatbot Page -->
+    <section id="chat" class="section" aria-label="AI Assistant">
+      <div class="chat-wrap">
+        <div class="chat-header">
+          <strong id="chatTitle">AI Assistant</strong>
+          <button class="center-button" id="micCenterBtn" title="Hold to speak">🎙️</button>
+        </div>
+
+        <div class="quick-actions">
+          <div class="quick-card" onclick="quickAsk('Voter ID Update')">🪪 <span id="qaVoter">Voter ID Update</span></div>
+          <div class="quick-card" onclick="quickAsk('Government Forms')">📄 <span id="qaForms">Government Forms</span></div>
+          <div class="quick-card" onclick="quickAsk('Passport Services')">🛂 <span id="qaPassport">Passport Services</span></div>
+          <div class="quick-card" onclick="quickAsk('Driving License')">🚘 <span id="qaDL">Driving License</span></div>
+          <div class="quick-card" onclick="quickAsk('DigiLocker Documents')">📁 <span id="qaDLocker">DigiLocker Documents</span></div>
+          <div class="quick-card urgent" onclick="quickAsk('Urgent Services')">⚡ <span id="qaUrgent">Urgent Services</span></div>
+        </div>
+
+        <div class="chat-body" id="chatBody" role="log" aria-live="polite">
+          <div class="msg ai">
+            <div id="aiWelcome">Hello! How can I help you today?</div>
+            <div class="actions">
+              <button class="voice-btn" title="Play voice">🔊</button>
+            </div>
+          </div>
+          <div class="msg user">
+            “I want to update my voter ID address”
+          </div>
+          <div class="msg ai">
+            <div id="aiSampleReply">Sure. I will guide you step-by-step in your selected language.</div>
+            <div class="actions">
+              <button class="voice-btn" title="Play voice">🔊</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input">
+          <input id="chatInput" class="input" type="text" placeholder="Type here…" aria-label="Type your message"/>
+          <button class="mic-btn" id="micBtn" title="Speak">🎙️</button>
+          <button class="send-btn btn-primary" id="sendBtn" title="Send">➤</button>
+        </div>
       </div>
 
-      <div class="cards">
-        <div class="card" onclick="applyDocs()">
-          📝 Apply for Documents
+      <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="btn btn-outline" onclick="go('home')">🏠 Home</button>
+      </div>
+    </section>
+
+    <!-- Government Schemes Page -->
+    <section id="schemes" class="section" aria-label="Government Schemes">
+      <div style="display:grid; gap:12px;">
+        <input class="search" id="schemeSearch" type="search" placeholder="Search schemes…" aria-label="Search schemes"/>
+
+        <div class="chips" role="group" aria-label="Filters">
+          <div class="chip active" data-filter="Education" onclick="toggleFilter(this)">Education</div>
+          <div class="chip" data-filter="Health" onclick="toggleFilter(this)">Health</div>
+          <div class="chip" data-filter="Farming" onclick="toggleFilter(this)">Farming</div>
+          <div class="chip" data-filter="Women" onclick="toggleFilter(this)">Women</div>
+          <div class="chip" data-filter="Pension" onclick="toggleFilter(this)">Pension</div>
         </div>
 
-        <div class="card" onclick="updateDocs()">
-          ✏️ Update Documents
+        <div id="schemesList" class="cards" style="grid-template-columns: 1fr;">
+          <!-- Dynamic scheme cards injected via JS -->
         </div>
 
-        <div class="card" onclick="viewDocs()">
-          📂 View Existing Documents
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top: 6px;">
+          <button class="btn btn-outline" onclick="go('home')">🏠 Home</button>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+
+    <!-- Document Scanner Page -->
+    <section id="scanner" class="section" aria-label="Document Scanner">
+      <div class="scanner">
+        <div class="preview" id="scanPreview">Preview appears here</div>
+        <input class="input" type="file" id="scanInput" accept="image/*" capture="environment" aria-label="Upload document photo"/>
+
+        <p class="welcome" id="scanInstructions">Scan Aadhaar, ration card, or income certificate</p>
+
+        <div id="scanStatus" class="status needs-update">Needs update</div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="verifyScan()">Verify</button>
+          <button class="btn btn-outline" onclick="go('home')">🏠 Home</button>
+        </div>
+
+        <div id="scanSuccess" style="margin-top:10px; display:none;">
+          <div class="status verified">Verified</div>
+          <p class="welcome">Document scanned successfully</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Application Status Page -->
+    <section id="status" class="section" aria-label="Application Status">
+      <div style="display:grid; gap:12px;">
+        <input class="input" id="statusInput" type="text" placeholder="Enter phone number or application ID" aria-label="Enter phone or ID"/>
+        <button class="btn btn-primary" onclick="trackStatus()">Check Status</button>
+
+        <div class="timeline" id="timeline">
+          <div class="tl-item">
+            <div class="tl-title">Submitted</div>
+            <div class="tl-desc">Your application has been received</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-title">Under Review</div>
+            <div class="tl-desc">Documents are being checked</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-title">Approved</div>
+            <div class="tl-desc">You will be notified by SMS</div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-outline" onclick="go('home')">🏠 Home</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    © 2026 Bharat Sahaayak AI | Digital India Initiative 🇮🇳
+    © 2026 Bharat Sahayak AI | Digital India Initiative 🇮🇳
   </footer>
 
   <script>
-    // Load username
-    const username = localStorage.getItem("user_name") || "User";
-    document.getElementById("username").textContent = username;
-
-    function applyDocs() {
-      window.location.href = "/select-document";
-    }
-
-    function updateDocs() {
-      alert("Update Documents feature coming soon!");
-    }
-
-    function viewDocs() {
-      alert("View Existing Documents feature coming soon!");
+    // Simple routing
+    function go(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function logout() {
       localStorage.clear();
       window.location.href = "/";
+    }
+
+    function alertText(type) {
+      if (type === 'updateDocs') alert('Update Existing Document feature coming soon');
+      if (type === 'digilocker') alert('Opening DigiLocker integration soon');
+    }
+
+    // i18n: minimal keys
+    const strings = {
+      en: {
+        welcome: 'Get help for government schemes easily',
+        askAI: 'Ask AI Assistant',
+        schemes: 'Government Schemes',
+        scanner: 'Document Scanner',
+        status: 'Application Status',
+        updateDocs: 'Update Existing Document',
+        digilocker: 'Access DigiLocker',
+        logout: 'Logout',
+        aiWelcome: 'Hello! How can I help you today?',
+        aiReply: 'Sure. I will guide you step-by-step in your selected language.',
+        chatTitle: 'AI Assistant',
+        qa: {
+          voter: 'Voter ID Update',
+          forms: 'Government Forms',
+          passport: 'Passport Services',
+          dl: 'Driving License',
+          dlocker: 'DigiLocker Documents',
+          urgent: 'Urgent Services'
+        },
+        scanInstr: 'Scan Aadhaar, ration card, or income certificate',
+        preview: 'Preview appears here',
+        docScanned: 'Document scanned successfully'
+      },
+      hi: {
+        welcome: 'सरकारी योजनाओं में आसानी से मदद पाएं',
+        askAI: 'एआई सहायक से पूछें',
+        schemes: 'सरकारी योजनाएँ',
+        scanner: 'डॉक्यूमेंट स्कैनर',
+        status: 'आवेदन स्थिति',
+        updateDocs: 'दस्तावेज़ अपडेट करें',
+        digilocker: 'डिजीलॉकर खोलें',
+        logout: 'लॉगआउट',
+        aiWelcome: 'नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ?',
+        aiReply: 'ज़रूर। मैं आपकी भाषा में कदम-दर-कदम मार्गदर्शन करूँगा।',
+        chatTitle: 'एआई सहायक',
+        qa: {
+          voter: 'वोटर आईडी अपडेट',
+          forms: 'सरकारी फॉर्म',
+          passport: 'पासपोर्ट सेवाएँ',
+          dl: 'ड्राइविंग लाइसेंस',
+          dlocker: 'डिजीलॉकर दस्तावेज़',
+          urgent: 'तत्काल सेवाएँ'
+        },
+        scanInstr: 'आधार, राशन कार्ड या आय प्रमाण पत्र स्कैन करें',
+        preview: 'पूर्वावलोकन यहाँ दिखेगा',
+        docScanned: 'दस्तावेज़ सफलतापूर्वक स्कैन हुआ'
+      },
+      mr: {
+        welcome: 'शासकीय योजनांसाठी सहज मदत मिळवा',
+        askAI: 'एआय सहाय्यकाला विचारा',
+        schemes: 'शासकीय योजना',
+        scanner: 'दस्तऐवज स्कॅनर',
+        status: 'अर्ज स्थिती',
+        updateDocs: 'विद्यमान दस्तऐवज अद्ययावत',
+        digilocker: 'डिजिलॉकर उघडा',
+        logout: 'लॉगआउट',
+        aiWelcome: 'नमस्कार! मी कशी मदत करू?',
+        aiReply: 'निश्चित. निवडलेल्या भाषेत पायरी-पायरीने मार्गदर्शन करीन.',
+        chatTitle: 'एआय सहाय्यक',
+        qa: {
+          voter: 'मतदार ओळखपत्र अद्ययावत',
+          forms: 'शासकीय फॉर्म',
+          passport: 'पासपोर्ट सेवा',
+          dl: 'वाहनचालक परवाना',
+          dlocker: 'डिजिलॉकर दस्तऐवज',
+          urgent: 'तत्काळ सेवा'
+        },
+        scanInstr: 'आधार, रेशन कार्ड किंवा उत्पन्न प्रमाणपत्र स्कॅन करा',
+        preview: 'येथे पूर्वावलोकन दिसेल',
+        docScanned: 'दस्तऐवज यशस्वीरित्या स्कॅन झाला'
+      },
+      ta: {
+        welcome: 'அரசுத் திட்டங்களுக்கு எளிய உதவி',
+        askAI: 'ஏஐ உதவியாளரை கேளுங்கள்',
+        schemes: 'அரசுத் திட்டங்கள்',
+        scanner: 'ஆவண ஸ்கேனர்',
+        status: 'விண்ணப்ப நிலை',
+        updateDocs: 'ஏற்கனவே உள்ள ஆவணத்தை புதுப்பிக்க',
+        digilocker: 'டிஜிலாக்கர் அணுகு',
+        logout: 'லாக்அவுட்',
+        aiWelcome: 'வணக்கம்! எப்படி உதவலாம்?',
+        aiReply: 'நீங்கள் தேர்ந்தெடுத்த மொழியில் படிப்படியாக வழிகாட்டுவேன்.',
+        chatTitle: 'ஏஐ உதவியாளர்',
+        qa: {
+          voter: 'வாக்காளர் ஐடி புதுப்பிப்பு',
+          forms: 'அரசு படிவங்கள்',
+          passport: 'பாஸ்போர்ட் சேவைகள்',
+          dl: 'ஓட்டுநர் உரிமம்',
+          dlocker: 'டிஜிலாக்கர் ஆவணங்கள்',
+          urgent: 'அவசர சேவைகள்'
+        },
+        scanInstr: 'ஆதார், ரேஷன் கார்டு அல்லது வருமானச் சான்று ஸ்கேன் செய்யுங்கள்',
+        preview: 'முன்தோற்றம் இங்கே',
+        docScanned: 'ஆவணம் வெற்றிகரமாக ஸ்கேன் செய்யப்பட்டது'
+      },
+      te: {
+        welcome: 'ప్రభుత్వ పథకాలకు సులభ సహాయం',
+        askAI: 'ఏఐ సహాయకుడిని అడగండి',
+        schemes: 'ప్రభుత్వ పథకాలు',
+        scanner: 'డాక్యుమెంట్ స్కానర్',
+        status: 'దరఖాస్తు స్థితి',
+        updateDocs: 'విద్యమాన పత్రాలు నవీకరించండి',
+        digilocker: 'డిజీలాకర్ యాక్సెస్',
+        logout: 'లాగ్ అవుట్',
+        aiWelcome: 'నమస్కారం! నేను ఎలా సహాయం చేయగలను?',
+        aiReply: 'మీ భాషలో దశలవారీగా మార్గదర్శనం చేస్తాను.',
+        chatTitle: 'ఏఐ సహాయకుడు',
+        qa: {
+          voter: 'ఓటరు ఐడి నవీకరణ',
+          forms: 'ప్రభుత్వ ఫారాలు',
+          passport: 'పాస్‌పోర్ట్ సేవలు',
+          dl: 'డ్రైవింగ్ లైసెన్స్',
+          dlocker: 'డిజీలాకర్ పత్రాలు',
+          urgent: 'తక్షణ సేవలు'
+        },
+        scanInstr: 'ఆధార్, రేషన్ కార్డు లేదా ఆదాయ ధృవీకరణ పత్రం స్కాన్ చేయండి',
+        preview: 'ఇక్కడ ప్రివ్యూ కనిపిస్తుంది',
+        docScanned: 'డాక్యుమెంట్ విజయవంతంగా స్కాన్ అయింది'
+      }
+    };
+
+    const langSel = document.getElementById('language');
+    langSel.addEventListener('change', applyLang);
+    applyLang(); // init
+
+    function applyLang() {
+      const l = strings[langSel.value] || strings.en;
+      // Home
+      document.getElementById('welcomeText').textContent = l.welcome;
+      document.getElementById('cardAskAI').textContent = l.askAI;
+      document.getElementById('cardSchemes').textContent = l.schemes;
+      document.getElementById('cardScanner').textContent = l.scanner;
+      document.getElementById('cardStatus').textContent = l.status;
+      document.getElementById('cardUpdateDocs').textContent = l.updateDocs;
+      document.getElementById('cardDigilocker').textContent = l.digilocker;
+      document.getElementById('cardLogout').textContent = l.logout;
+
+      // Chat
+      document.getElementById('aiWelcome').textContent = l.aiWelcome;
+      document.getElementById('aiSampleReply').textContent = l.aiReply;
+      document.getElementById('chatTitle').textContent = l.chatTitle;
+      document.getElementById('qaVoter').textContent = l.qa.voter;
+      document.getElementById('qaForms').textContent = l.qa.forms;
+      document.getElementById('qaPassport').textContent = l.qa.passport;
+      document.getElementById('qaDL').textContent = l.qa.dl;
+      document.getElementById('qaDLocker').textContent = l.qa.dlocker;
+      document.getElementById('qaUrgent').textContent = l.qa.urgent;
+
+      // Scanner
+      document.getElementById('scanInstructions').textContent = l.scanInstr;
+      document.getElementById('scanPreview').textContent = l.preview;
+      const successText = l.docScanned;
+      const successNode = document.querySelector('#scanSuccess .welcome');
+      if (successNode) successNode.textContent = successText;
+    }
+
+    // Chat interactions (simple demo)
+    const chatBody = document.getElementById('chatBody');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const micBtn = document.getElementById('micBtn');
+    const micCenterBtn = document.getElementById('micCenterBtn');
+
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
+    micBtn.addEventListener('click', () => addAI('Voice input coming soon'));
+    micCenterBtn.addEventListener('click', () => addAI('Listening…'));
+
+    function sendMessage() {
+      const txt = chatInput.value.trim();
+      if (!txt) return;
+      addUser(txt);
+      // Simulated AI reply in selected language
+      const l = strings[langSel.value] || strings.en;
+      const reply = l.aiReply;
+      addAI(reply);
+      chatInput.value = '';
+    }
+    function addUser(text) {
+      const node = document.createElement('div');
+      node.className = 'msg user';
+      node.textContent = text;
+      chatBody.appendChild(node);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    function addAI(text) {
+      const node = document.createElement('div');
+      node.className = 'msg ai';
+      node.innerHTML = '<div>' + text + '</div><div class="actions"><button class="voice-btn" title="Play voice">🔊</button></div>';
+      chatBody.appendChild(node);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    function quickAsk(topic) {
+      addUser(topic);
+      const l = strings[langSel.value] || strings.en;
+      addAI(l.aiReply);
+    }
+
+    // Schemes: sample data
+    const schemeData = [
+      {
+        name: 'PM Kisan',
+        tag: 'Farming',
+        eligibility: 'Small & marginal farmers',
+        benefits: '₹6,000 per year',
+        docs: 'Aadhaar, bank passbook, land records'
+      },
+      {
+        name: 'Ayushman Bharat',
+        tag: 'Health',
+        eligibility: 'Low-income families',
+        benefits: 'Health insurance up to ₹5 lakh',
+        docs: 'Aadhaar, ration card'
+      },
+      {
+        name: 'National Pension Scheme',
+        tag: 'Pension',
+        eligibility: '18–60 years citizens',
+        benefits: 'Retirement corpus & pension',
+        docs: 'Aadhaar, PAN, bank details'
+      },
+      {
+        name: 'Beti Bachao Beti Padhao',
+        tag: 'Women',
+        eligibility: 'Girl child welfare',
+        benefits: 'Education & safety initiatives',
+        docs: 'Local IDs, birth certificate'
+      },
+      {
+        name: 'Scholarship – NSP',
+        tag: 'Education',
+        eligibility: 'Students (merit/means)',
+        benefits: 'Tuition & stipend support',
+        docs: 'Aadhaar, income certificate, marksheet'
+      }
+    ];
+
+    const schemesList = document.getElementById('schemesList');
+    const schemeSearch = document.getElementById('schemeSearch');
+    let activeFilter = 'Education';
+
+    function renderSchemes() {
+      const q = (schemeSearch.value || '').toLowerCase();
+      schemesList.innerHTML = '';
+      const filtered = schemeData.filter(s =>
+        (!activeFilter || s.tag === activeFilter) &&
+        (s.name.toLowerCase().includes(q) ||
+         s.eligibility.toLowerCase().includes(q) ||
+         s.benefits.toLowerCase().includes(q) ||
+         s.docs.toLowerCase().includes(q))
+      );
+      filtered.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'scheme-card';
+        card.innerHTML = `
+          <div class="scheme-title">${s.name} <span style="color:${tagColor(s.tag)}; font-size:12px; margin-left:6px;">• ${s.tag}</span></div>
+          <div class="scheme-meta"><strong>Eligibility:</strong> ${s.eligibility}</div>
+          <div class="scheme-meta"><strong>Benefits:</strong> ${s.benefits}</div>
+          <div class="scheme-meta"><strong>Required documents:</strong> ${s.docs}</div>
+          <div class="scheme-actions">
+            <button class="btn btn-primary">Apply</button>
+            <button class="btn btn-outline">Learn More</button>
+          </div>
+        `;
+        schemesList.appendChild(card);
+      });
+      if (filtered.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'welcome';
+        empty.textContent = 'No schemes found for your search';
+        schemesList.appendChild(empty);
+      }
+    }
+    function tagColor(tag) {
+      if (tag === 'Education') return '#1e90ff';
+      if (tag === 'Health') return '#d9534f';
+      if (tag === 'Farming') return '#138808';
+      if (tag === 'Women') return '#9c27b0';
+      if (tag === 'Pension') return '#f57c00';
+      return '#666';
+    }
+    function toggleFilter(el) {
+      document.querySelectorAll('.chips .chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      activeFilter = el.getAttribute('data-filter');
+      renderSchemes();
+    }
+    schemeSearch.addEventListener('input', renderSchemes);
+    renderSchemes();
+
+    // Scanner preview + verify
+    const scanInput = document.getElementById('scanInput');
+    const scanPreview = document.getElementById('scanPreview');
+    const scanStatus = document.getElementById('scanStatus');
+    const scanSuccess = document.getElementById('scanSuccess');
+
+    scanInput.addEventListener('change', () => {
+      const file = scanInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        scanPreview.innerHTML = `<img src="${e.target.result}" alt="Document preview" style="max-width:100%; border-radius:12px;">`;
+      };
+      reader.readAsDataURL(file);
+      scanStatus.className = 'status needs-update';
+      scanStatus.textContent = 'Needs update';
+      scanSuccess.style.display = 'none';
+    });
+
+    function verifyScan() {
+      // Simulate verification
+      scanStatus.className = 'status verified';
+      scanStatus.textContent = 'Verified';
+      scanSuccess.style.display = 'block';
+    }
+
+    // Status tracking (demo)
+    function trackStatus() {
+      const val = (document.getElementById('statusInput').value || '').trim();
+      if (!val) {
+        alert('Please enter phone number or application ID');
+        return;
+      }
+      const tl = document.getElementById('timeline');
+      tl.innerHTML = `
+        <div class="tl-item">
+          <div class="tl-title">Submitted</div>
+          <div class="tl-desc">Your application has been received</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-title">Under Review</div>
+          <div class="tl-desc">Documents are being checked</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-title">Approved</div>
+          <div class="tl-desc">You will be notified by SMS</div>
+        </div>
+      `;
+      alert('Status updated');
     }
   </script>
 
